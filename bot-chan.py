@@ -3,6 +3,9 @@
 import discord
 import asyncio
 from check_rss import getRelease
+import tinify
+
+tinify.key = "key"
 
 client = discord.Client()
 
@@ -32,6 +35,24 @@ async def on_message(message):
 	elif message.channel.is_private:
 		tmp = await client.send_message(message.channel, 'kys')
 		await client.edit_message(tmp, 'lol')
+	elif message.content.startswith('!crop') and len(message.attachments)>0:
+                source = tinify.from_url(message.attachments[0]['url'])
+                resized = source.resize(
+                    method="cover",
+                    width=128,
+                    height=128
+                )
+                resized.to_file("img.png")
+                await client.send_file(message.channel, "img.png")
+	elif message.content.startswith('!crop') and len(message.embeds)>0:
+                source = tinify.from_url(message.embeds[0]['url'])
+                resized = source.resize(
+                    method="cover",
+                    width=128,
+                    height=128
+                )
+                resized.to_file("img.png")
+                await client.send_file(message.channel, "img.png")
 
 @client.event
 async def on_member_remove(server):
