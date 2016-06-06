@@ -1,4 +1,4 @@
-"""Gets the torrent RSS feed and parses it."""
+"""Gets the RSS and parses it."""
 
 import re
 import requests
