@@ -55,6 +55,13 @@ async def on_message(message):
         await client.send_file(message.channel, "img.png")
 
 @client.event
+async def on_member_ban(server):
+	global bans
+	bans.append(client.user)
+	msg = '**{0.name}** was banned from the server.'.format(server)
+	await client.send_message(channel, msg)
+
+@client.event
 async def on_member_remove(server):
     if (client.user not in bans):
         msg = '**{0.name}** left or was kicked from the server.'.format(server)
